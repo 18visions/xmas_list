@@ -4,7 +4,7 @@ from sqlalchemy.ext.declarative import declarative_base
 Base = declarative_base()
 
 
-class ExampleModel(Base):
+class User(Base):
     __tablename__ = "Users"
     __table_args__ = {"schema": "dbo"}
 
