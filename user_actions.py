@@ -15,6 +15,7 @@ engine = create_engine('mssql+pyodbc://{}:{}@{}:{}/{}?driver=SQL+Server'
 
 
 def create_new_user(firstname, lastname, email, phonenumber):
+    createdate_now = datetime.now()
     try:
         Session = sessionmaker(bind=engine)
         session = Session()
@@ -24,7 +25,8 @@ def create_new_user(firstname, lastname, email, phonenumber):
                 newUser = User(firstname=firstname,
                                lastname=lastname,
                                email=email,
-                               phonenumber=phonenumber
+                               phonenumber=phonenumber,
+                               dateAdded=createdate_now
                                )
                 session.add(newUser)
                 session.commit()
@@ -55,6 +57,38 @@ def create_new_user_item(userId, description, shoppingLink):
         print(e)
 
 
+def get_user_item(itemId):
+    try:
+        Session = sessionmaker(bind=engine)
+        session = Session()
+        try:
+            getItem = session.query(userItems.itemId).filter(userItems.itemId == itemId).all()
+            for x in getItem:
+                return x[0]
+        except Exception as e:
+            print(e)
+    except Exception as e:
+        print(e)
+
+
+def delete_user_item():
+    itemToDelete = get_user_item()
+    try:
+        Session = sessionmaker(bind=engine)
+        session = Session()
+        try:
+            getItem = session.query(userItems).filter(userItems.itemId == itemToDelete).delete()
+            session.commit()
+            session.close()
+            print(getItem)
+        except Exception as e:
+            print(e)
+    except Exception as e:
+        print(e)
+
+
 if __name__ == "__main__":
-    create_new_user_item(1, 'itemstuff', 'www.google.com')
+    #create_new_user_item(1, 'itemstuff', 'www.google.com')
     create_new_user('nick', 'turner', 'test@test.com', '3609493180')
+    #get_user_item(4)
+    #delete_user_item()

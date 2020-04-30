@@ -20,9 +20,10 @@ class User(Base):
                    nullable=False)
     phonenumber = Column(String(100),
                          nullable=False)
+    dateAdded = Column(DateTime, server_default=func.now(), onupdate=func.current_timestamp())
 
-    def __repr__(self):
-        return '<User {}>'.format(self.id)
+    #def __repr__(self):
+    #    return '<User {}>'.format(self.id)
 
 
 class userItems(Base):
@@ -40,4 +41,4 @@ class userItems(Base):
     dateAdded = Column(DateTime, server_default=func.now(), onupdate=func.current_timestamp())
 
     def __repr__(self):
-        return '<User Items {}>'.format(self.itemId)
+        return '<User Items: itemId: {}, description: {}>'.format(self.itemId, self.description)

@@ -1,4 +1,4 @@
-from users_table import Base
+from table_definitions import Base
 from sqlalchemy import create_engine
 from config import credential
 import pyodbc
