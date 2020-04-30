@@ -1,4 +1,4 @@
-from users_table import User, userItems
+from table_definitions import User, userItems
 from sqlalchemy import create_engine, exists
 from sqlalchemy.orm import sessionmaker
 from config import credential
