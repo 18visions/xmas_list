@@ -22,10 +22,10 @@ def create_new_user(firstname, lastname, email, phonenumber):
         doesUserExist = session.query(User).filter(User.firstname == firstname).all()
         if not doesUserExist:
             newUser = User(firstname=firstname,
-                            lastname=lastname,
-                            email=email,
-                            phonenumber=phonenumber,
-                            dateAdded=createdate_now
+                           lastname=lastname,
+                           email=email,
+                           phonenumber=phonenumber,
+                           dateAdded=createdate_now
                             )
             session.add(newUser)
             session.commit()
@@ -59,6 +59,25 @@ def get_user_item(itemId):
         print(e)
 
 
+def get_all_user_items(userid):
+    try:
+        getAll = session.query(userItems).filter(userItems.userId == userid).all()
+        for x in getAll:
+            print(x)
+            return x
+    except Exception as e:
+        print(e)
+
+
+def get_user_phone(userid):
+    try:
+        getPhone = session.query(User.phonenumber).filter(User.userId == userid).all()
+        for phone in getPhone:
+            return phone[0]
+    except Exception as e:
+        print(e)
+
+
 def delete_user_item(uid):
     itemId = uid
     itemToDelete = get_user_item(itemId)
@@ -72,7 +91,9 @@ def delete_user_item(uid):
 
 
 if __name__ == "__main__":
-    #create_new_user_item(1, 'itemstuff', 'www.google.com')
+    create_new_user_item(1, 'itemstuff', 'www.google.com')
     #create_new_user('nick', 'turner', 'test@test.com', '3609493180')
     #get_user_item(8)
     #delete_user_item(5)
+    #get_all_user_items(1)
+    #get_user_phone(1)
