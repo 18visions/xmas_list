@@ -17,7 +17,7 @@ class User(Base):
     lastname = Column(String(100),
                       nullable=False)
     email = Column(String(100),
-                   nullable=False)
+                   nullable=True)
     phonenumber = Column(String(100),
                          nullable=False)
     dateAdded = Column(DateTime, server_default=func.now(), onupdate=func.current_timestamp())
@@ -42,3 +42,16 @@ class userItems(Base):
 
     def __repr__(self):
         return '<User Items: itemId: {}, description: {}>'.format(self.itemId, self.description)
+
+
+class smsmessages(Base):
+    __tablename__ = 'smsMessages'
+    __table_args__ = {"schema": "dbo"}
+    userId = Column(Integer,
+                    primary_key=False,
+                    nullable=False)
+    toNumber = Column(String(100),
+                      nullable=False)
+    twilioSid = Column(String(100),
+                       primary_key=True)
+    dateSent = Column(DateTime, server_default=func.now(), onupdate=func.current_timestamp())
